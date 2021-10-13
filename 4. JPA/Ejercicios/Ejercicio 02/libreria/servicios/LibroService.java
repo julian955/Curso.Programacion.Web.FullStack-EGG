@@ -120,7 +120,7 @@ public class LibroService {
     public void buscarLibroPorId() {
         try {
             Libro lib = new Libro();
-            int id = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el isbn del libro: "));
+            long id = Long.parseLong(JOptionPane.showInputDialog("Ingrese el isbn del libro: "));
             lib = em.find(Libro.class, id);
             if (lib != null) {
                 JOptionPane.showMessageDialog(null, lib.mostrarLibro());
@@ -308,6 +308,51 @@ public class LibroService {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error de sistema.\n" + e);
             throw e;
+        }
+    }
+
+    public Libro devLibro() {
+        try {
+            Libro aut = new Libro();
+            long id = Long.parseLong(JOptionPane.showInputDialog("Ingrese el ISBN del libro: "));
+            aut = em.find(Libro.class, id);
+
+            return aut;
+
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public void prestamo(long id) {
+        try {
+            Libro lib = new Libro();
+            lib = em.find(Libro.class, id);
+            int restante = lib.getEjemplaresRestante() - 1;
+            int prestado = lib.getEjemplaresPrestados() + 1;
+            lib.setEjemplaresRestante(restante);
+            lib.setEjemplaresPrestados(prestado);
+            em.getTransaction().begin();
+            em.merge(lib);
+            em.getTransaction().commit();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error de sistema.\n" + e);
+        }
+    }
+
+    public void devolucion(long id) {
+        try {
+            Libro lib = new Libro();
+            lib = em.find(Libro.class, id);
+            lib.setEjemplaresRestante((lib.getEjemplaresRestante() + 1));
+            lib.setEjemplaresPrestados((lib.getEjemplaresPrestados() - 1));
+            em.getTransaction().begin();
+            em.merge(lib);
+            em.getTransaction().commit();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error de sistema.\n" + e);
         }
     }
 }

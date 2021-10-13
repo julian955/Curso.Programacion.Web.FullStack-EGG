@@ -1,31 +1,34 @@
 package libreria.entidades;
 
-import java.time.LocalDate;
+
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Prestamo {
-    
+
     @Id
     private String id;
-    private LocalDate prestamo;
-    private LocalDate devolucion;
+    @Temporal(TemporalType.DATE)
+    private Date prestamo;
+    @Temporal(TemporalType.DATE)
+    private Date devolucion;
     private Libro libro;
     private Cliente cliente;
 
     public Prestamo() {
     }
 
-    public Prestamo(String id, LocalDate prestamo, LocalDate devolucion, Libro libro, Cliente cliente) {
+    public Prestamo(String id, Date prestamo, Date devolucion, Libro libro, Cliente cliente) {
         this.id = id;
         this.prestamo = prestamo;
         this.devolucion = devolucion;
         this.libro = libro;
         this.cliente = cliente;
     }
-    
-    
 
     public String getId() {
         return id;
@@ -35,19 +38,19 @@ public class Prestamo {
         this.id = id;
     }
 
-    public LocalDate getPrestamo() {
+    public Date getPrestamo() {
         return prestamo;
     }
 
-    public void setPrestamo(LocalDate prestamo) {
+    public void setPrestamo(Date prestamo) {
         this.prestamo = prestamo;
     }
 
-    public LocalDate getDevolucion() {
+    public Date getDevolucion() {
         return devolucion;
     }
 
-    public void setDevolucion(LocalDate devolucion) {
+    public void setDevolucion(Date devolucion) {
         this.devolucion = devolucion;
     }
 
@@ -67,5 +70,8 @@ public class Prestamo {
         this.cliente = cliente;
     }
     
-    
+    public String mostrarPrestamo(){
+        return "ID prestamo: "+id+" Prestamo: "+prestamo+" Devolucion: "+devolucion+" Libro: "+libro.getTitulo()+" Cliente: "+ cliente.getNombre()+" "+cliente.getApellido();
+    }
+
 }

@@ -26,6 +26,15 @@ public class Cliente {
         this.telefono = telefono;
     }
 
+    public Cliente(long dni, String nombre, String apellido, String telefono) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.telefono = telefono;
+    }
+    
+    
+
     public int getId() {
         return id;
     }

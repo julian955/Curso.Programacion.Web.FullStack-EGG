@@ -21,7 +21,7 @@ public class AutorService {
 
         try {
             String nombre = JOptionPane.showInputDialog("Ingrese el nombre del autor");
-            if (nombre == null) {
+            if (nombre == null || nombre.trim().isEmpty()) {
                 throw new Exception("El nombre no puede estar vacio.");
             }
 
